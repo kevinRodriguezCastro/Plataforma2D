@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movimiento : MonoBehaviour
 {
     private Rigidbody2D Rigidbody2D;
+    private Animator animator;
     private float horizontal;
     
     public float Speed;
@@ -16,12 +17,20 @@ public class Movimiento : MonoBehaviour
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+
+        animator.SetBool("running",horizontal != 0.0f);
+
+        // Controlamos la dirección donde mira el Personaje cuando
+        // cambia de dirección izquierda o derecha
+        if(horizontal < 0.0f) transform.localScale = new Vector3(-1.0f,1.0f,1.0f);
+        else if (horizontal > 0.0f) transform.localScale = new Vector3(1.0f,1.0f,1.0f);
 
         if(Physics2D.Raycast(transform.position, Vector3.down,0.1f)){
             Grounded = true;
@@ -32,6 +41,7 @@ public class Movimiento : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W) && Grounded){
             Jump();
         }
+        Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
     }
 
     private void Jump(){
