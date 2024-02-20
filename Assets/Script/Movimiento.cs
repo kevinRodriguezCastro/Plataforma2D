@@ -10,6 +10,8 @@ public class Movimiento : MonoBehaviour
     
     public float Speed;
     public float JumpForce;
+
+    public GameObject prefabBullet;
     //si esta en el aire
     bool Grounded;
 
@@ -41,13 +43,31 @@ public class Movimiento : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W) && Grounded){
             Jump();
         }
+
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Shoot();
+        }
+
         Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
     }
 
     private void Jump(){
         Rigidbody2D.AddForce(Vector2.up * JumpForce);
     }
+    private void Shoot(){
+       Vector3 direction;
 
+        if ( transform.localScale.x == 1.0f ) direction = Vector3.right;
+        else direction = Vector3.left;
+
+        // Pintamos el Prefab en scena, en la posición indicada y la rotación=0
+        // La posición se calcula: 
+        // transform.position -> centro de John
+        // direction *0.1f -> offset de desplazamiento
+        GameObject bullet = Instantiate(prefabBullet,transform.position + direction *0.1f, Quaternion.identity);
+
+        bullet.GetComponent<BulletScript>().SetDirection(direction);
+    }
     void FixedUpdate(){
         Rigidbody2D.velocity = new Vector2(horizontal,Rigidbody2D.velocity.y);
     }
