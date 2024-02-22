@@ -15,6 +15,10 @@ public class Movimiento : MonoBehaviour
     //si esta en el aire
     bool Grounded;
 
+    private float LastShoot;
+
+    private int Health = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,8 +48,9 @@ public class Movimiento : MonoBehaviour
             Jump();
         }
 
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if(Input.GetKeyDown(KeyCode.Space)&& Time.time > LastShoot + 0.25f){
             Shoot();
+            LastShoot = Time.time;
         }
 
         Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
@@ -68,6 +73,12 @@ public class Movimiento : MonoBehaviour
 
         bullet.GetComponent<BulletScript>().SetDirection(direction);
     }
+
+    public void Hit(){
+        Health = Health - 1;
+        if(Health == 0)Destroy(gameObject);
+    }
+    
     void FixedUpdate(){
         Rigidbody2D.velocity = new Vector2(horizontal,Rigidbody2D.velocity.y);
     }
