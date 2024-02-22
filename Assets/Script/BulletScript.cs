@@ -22,34 +22,43 @@ public class BulletScript : MonoBehaviour
     void Update()
     {
         Rigidbody2D.velocity = Vector2.right * Speed;
-            
+
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         Movimiento john = collider.GetComponent<Movimiento>();
         GruntScript grunt = collider.GetComponent<GruntScript>();
-        
-        if(john != null){ //hemos impactado con john
+        BulletScript bala = collider.GetComponent<BulletScript>();
+
+        if (john != null)
+        { //hemos impactado con john
             john.Hit();
         }
-        if(grunt != null){//hemos impactado con grunt
+        if (grunt != null)
+        {//hemos impactado con grunt
             grunt.Hit();
         }
+        if (bala == null)
+        {
+            DestroyBullet();
+        }
 
-        DestroyBullet();
     }
 
-    public void DestroyBullet(){
+    public void DestroyBullet()
+    {
         Destroy(gameObject);
-        
+
     }
 
-    private void FixedUpdate(){
+    private void FixedUpdate()
+    {
         Rigidbody2D.velocity = Direction * Speed;
     }
-    
-    public void SetDirection(Vector2 direction){
+
+    public void SetDirection(Vector2 direction)
+    {
         Direction = direction;
     }
 }

@@ -34,7 +34,7 @@ public class GruntScript : MonoBehaviour
         float distance = Mathf.Abs(John.transform.position.x - transform.position.x);
         // si la distancia es menor que 1 metro entonces permitimos al enemigo disparar
         // Le añadimos un delay tal como habíamos hecho con el disparo de John
-        if (distance < 1.0f && Time.time > LastShoot + 0.25f)
+        if (distance < 1.0f && Time.time > LastShoot + 0.75f)
         {
             Shoot();
             LastShoot = Time.time;
