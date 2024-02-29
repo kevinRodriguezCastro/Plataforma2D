@@ -33,7 +33,7 @@ public class BulletScript : MonoBehaviour
 
         if (john != null)
         { //hemos impactado con john
-            john.Hit();
+            john.Hit(20);
         }
         if (grunt != null)
         {//hemos impactado con grunt

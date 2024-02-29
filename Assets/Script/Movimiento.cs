@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movimiento : MonoBehaviour
 {
@@ -17,13 +18,18 @@ public class Movimiento : MonoBehaviour
 
     private float LastShoot;
 
-    private int Health = 5;
+    private float Health;
+
+    public float vidaMaxima;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        Health = vidaMaxima;
     }
 
     // Update is called once per frame
@@ -74,12 +80,21 @@ public class Movimiento : MonoBehaviour
         bullet.GetComponent<BulletScript>().SetDirection(direction);
     }
 
-    public void Hit(){
-        Health = Health - 1;
-        if(Health == 0)Destroy(gameObject);
+    public void Hit(int daño){
+        Health = Health - daño;
+        GetComponent<BarraDeVida>().actualizarBarraVida(Health,vidaMaxima);
+        if(Health <= 0){
+            Destroy(gameObject);
+            Debug.Log("Muerto");
+            SceneManager.LoadScene(2);
+        }
     }
     
     void FixedUpdate(){
         Rigidbody2D.velocity = new Vector2(horizontal,Rigidbody2D.velocity.y);
+    }
+
+    public float getVidaActual(){
+        return Health;
     }
 }
