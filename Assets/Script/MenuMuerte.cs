@@ -8,6 +8,6 @@ public class MenuMuerte : MonoBehaviour
    
 
     public void menuInicio(){
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }

@@ -88,7 +88,7 @@ public class Movimiento : MonoBehaviour
         if(Health <= 0){
             Destroy(gameObject);
             Debug.Log("Muerto");
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
     
