@@ -12,6 +12,7 @@ public class Movimiento : MonoBehaviour
     public float Speed;
     public float JumpForce;
 
+    public AudioClip sonidoHit;
     public GameObject prefabBullet;
     //si esta en el aire
     bool Grounded;
@@ -82,6 +83,7 @@ public class Movimiento : MonoBehaviour
 
     public void Hit(int daño){
         Health = Health - daño;
+        GetComponent<AudioSource>().PlayOneShot(sonidoHit);
         GetComponent<BarraDeVida>().actualizarBarraVida(Health,vidaMaxima);
         if(Health <= 0){
             Destroy(gameObject);
